@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<HTML>
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script type="text/javascript" src="get-turbines.js"></script>
+	</head>
+	<body>
+		<div class="pixlogo">
+			<img src="merkur-logo.png">
+		</div>
+		<table id="turbines">
+			<thead>
+		        <tr>
+		          <th>TurbineId!!!!</th>
+		          <th>Status</th>
+		          <th>WindSpeed</th>
+		          <th>Voltage</th>
+		          <th>Temp</th>
+		        </tr>
+		     </thead>
+		     <div id="turbines_volt"> 
+		     	<script type="text/javascript">
+		     		getVoltage()
+		     	</script>
+		     </div>	
+		     <script type="text/javascript">
+            	getJSON();
+        	 </script>
+		</table>	
+	</body>
+</HTML>
