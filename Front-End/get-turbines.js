@@ -29,8 +29,13 @@ function getJSON() {
 }
 
 function filterById() {
-  var id = document.getElementById("turbine_num").value;
-  var from = id.match(/ain/gi);
+  var id = document.getElementById("turbine_num").value; //ex. 2-66
+  var from = id.match(/([0-9])+(-)/g);
+  from = from.replace(/(-)/g, '');
+  var to = id.match(/(-)([0-9])+/g);
+  to = to.replace(/(-)/g, '');
+
+  
   getData(window.tur, id);
   getWindSpeed(window.tur, id);
   console.log(id);
