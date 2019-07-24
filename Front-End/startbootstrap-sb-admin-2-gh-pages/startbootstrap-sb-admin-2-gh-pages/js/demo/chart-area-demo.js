@@ -1,6 +1,12 @@
 window.HistData = 0;
+var clock;
+
+function refresh_data_history() {
+  clock = setInterval(callAPIForHistoricalData, 10000);
+}
+
 function callAPIForHistoricalData() {
-    console.log("callAPIForHistoricalData");
+    console.log("callAPIForHistoricalDataArea");
     $.ajax({
         //url: 'https://a4girz51oh.execute-api.us-east-1.amazonaws.com/return/1?recordTime=1', //FIXME: get the actual link
         url: 'https://1xwt8lhj3l.execute-api.eu-central-1.amazonaws.com/turbinestats/all?id=turbine',
@@ -14,10 +20,7 @@ function callAPIForHistoricalData() {
             handleException(request, message, error);
         }
     });
-
-    console.log(window.HistData);
-   
-   
+    //console.log(window.HistData); 
 }
 // Set new default font family and font color to mimic Bootstrap's default styling
 Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
