@@ -131,48 +131,6 @@
                         <!-- Page Heading -->
                         <div class="col-md-10">
 
-                            <!-- Title for Real-Time Data-->
-                            <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                                <h1 class="h3 mb-0 text-gray-800">Real-Time Dashboards</h1>
-                                <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
-                            </div>
-                            <!-- End Title for Real-Time Data-->
-
-                            <!-- Content Row for Real-Time Data-->
-                            <div class="row" id="realtime">
-                                <!-- Turbine Box -->
-                                <div id="turbines_box_template" class="Data-Row col-xl-3 col-md-6 mb-4" style="display: none">
-
-                                    <div class="card shadow h-100 py-2 border_color">
-
-                                        <div id="turb" class="card-body">
-                                            <div class="row no-gutters align-items-center">
-
-                                                <div class="col mr-2">
-                                                    <div id="number_id" class="text-xs font-weight-bold text-uppercase mb-1 number_id title-color"> TURB:  </div><br>
-                                                    <p id="volt" class="volt"> Voltage: </p>
-                                                    <p id="temp" class="temp"> Temperature: </p>
-                                                    <p id="windspeed" class="windspeed"> Wind Speed: </p>
-                                                    <p id="power" class="power"> Power: </p>
-                                                    <p id="direction" class="direction"> Direction: </p>
-                                                    <p id="unk" class="unk"> Current: </p>
-                                                    <p id="time" class="time"> Time: </p>
-                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                        <div id="turbines_box"> 
-                                                        </div>
-                                                </div>
-
-                                                </div>
-                                                <div class="col-auto">
-                                                    <i class="fas fa-bolt fa-2x text-gray-300"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- End of Content Row for Real-Time Data-->
-
                             <!-- Title for KPIs-->
                             <div class="d-sm-flex align-items-left justify-content-between mb-4">
                                 <h1 class="h3 mb-0 text-gray-800">KPIs Dashboards</h1>
@@ -188,8 +146,8 @@
                                         <div class="row no-gutters align-items-center">
 
                                             <div class="col mr-2">
-                                                <div id="avg_volt" class="text-xs font-weight-bold text-uppercase mb-1 number_id title-color"> Total Voltage: </div><br>
-                                                <p id="volt" class="volt"> 100 W </p>
+                                                <div id="kpi_totpow" class="text-xs font-weight-bold text-uppercase mb-1 number_id title-color"> Total Power: </div><br>
+                                                <p id="numb_kpi_totpow" class="volt"></p>
                                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
                                                     <div id="kpi_box"> 
                                                 </div>
@@ -222,6 +180,67 @@
                                     </div>
                                 </div>
 
+                                <div class="card shadow h-100 py-2 border_color">
+
+                                    <div id="kpi" class="card-body">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <div id="kpi_offline" class="text-xs font-weight-bold text-uppercase mb-1 number_id title-color"> Total Offline: </div><br>
+                                                <p id="numb_kpi_offline" class="volt"> </p>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                    <div id="kpi_box"> 
+                                                    </div>
+                                            </div>
+
+                                            </div>
+                                            <div class="col-auto">
+                                                <i class="fas fa-bolt fa-2x text-gray-300"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- End of Content Row for KPIs -->
+
+                            <!-- Title for Real-Time Data-->
+                            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                                <h1 class="h3 mb-0 text-gray-800">Real-Time Dashboards</h1>
+
+                                <!--<a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>-->
+                            </div>
+                            <!-- End Title for Real-Time Data-->
+
+                            <!-- Content Row for Real-Time Data-->
+                            <div class="row" id="realtime">
+                                <!-- Turbine Box -->
+                                <div id="turbines_box_template" class="Data-Row col-xl-3 col-md-6 mb-4" style="display: none">
+
+                                    <div id="turb_online" class="card shadow h-100 py-2 border_color">
+
+                                        <div id="turb" class="card-body">
+                                            <div class="row no-gutters align-items-center">
+
+                                                <div class="col mr-2">
+                                                    <div id="number_id" class="text-xs font-weight-bold text-uppercase mb-1 number_id title-color"> TURB:  </div><br>
+                                                    <p id="volt" class="volt"> Voltage: </p>
+                                                    <p id="temp" class="temp"> Temperature: </p>
+                                                    <p id="windspeed" class="windspeed"> Wind Speed: </p>
+                                                    <p id="power" class="power"> Power: </p>
+                                                    <p id="time" class="time"> Time: </p>
+                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                        <div id="turbines_box"> 
+                                                        </div>
+                                                </div>
+
+                                                </div>
+                                                <div class="col-auto">
+                                                    <i class="fas fa-bolt fa-2x text-gray-300"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <!-- End of Content Row for Real-Time Data-->
 
@@ -361,6 +380,8 @@
 
     <script type="text/javascript">callAPIForHistoricalData();</script>
     <script type="text/javascript">callAPIForHistoricalDataLine();</script>
+    <script type="text/javascript">refresh_data_history();</script>
+    <script type="text/javascript">refresh_data_history_Line();</script>
 
 </body>
 
