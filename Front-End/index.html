@@ -112,7 +112,7 @@
                             </div>
                         </form>
 
-                    <font color="white"><h6>Custom Period</h6></font>
+                    <font color="white"><h6>Selected Period</h6></font>
                     <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
 
@@ -170,6 +170,58 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <!-- End of Content Row for Real-Time Data-->
+
+                            <!-- Title for KPIs-->
+                            <div class="d-sm-flex align-items-left justify-content-between mb-4">
+                                <h1 class="h3 mb-0 text-gray-800">KPIs Dashboards</h1>
+                            </div>
+                            <!-- End of Title for KPIs-->
+
+                            <!-- Content Row for KPIs-->
+                            <div class="row" id="kpis">
+                                <!-- KPIs Box -->
+                                <div class="card shadow h-100 py-2 border_color align-items-center">
+
+                                    <div id="kpi" class="card-body">
+                                        <div class="row no-gutters align-items-center">
+
+                                            <div class="col mr-2">
+                                                <div id="avg_volt" class="text-xs font-weight-bold text-uppercase mb-1 number_id title-color"> Total Voltage: </div><br>
+                                                <p id="volt" class="volt"> 100 W </p>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                    <div id="kpi_box"> 
+                                                </div>
+                                            </div>
+                                            </div>
+                                            <div class="col-auto">
+                                                <i class="fas fa-bolt fa-2x text-gray-300"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card shadow h-100 py-2 border_color">
+
+                                    <div id="kpi" class="card-body">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <div id="avg_volt" class="text-xs font-weight-bold text-uppercase mb-1 number_id title-color"> Total Online: </div><br>
+                                                <p id="volt" class="volt"> 2 </p>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                    <div id="kpi_box"> 
+                                                    </div>
+                                            </div>
+
+                                            </div>
+                                            <div class="col-auto">
+                                                <i class="fas fa-bolt fa-2x text-gray-300"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                             <!-- End of Content Row for Real-Time Data-->
 
@@ -306,6 +358,9 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
+
+    <script type="text/javascript">callAPIForHistoricalData();</script>
+    <script type="text/javascript">callAPIForHistoricalDataLine();</script>
 
 </body>
 
