@@ -49,7 +49,19 @@ function callAPI(){
 function getJSON() {
   //console.log("Another call!")
   callAPI();
-  updateRealtimeDash(window.tur)
+  updateRealtimeDash(window.tur);
+  updateKPIDash(window.tur);
+}
+
+function getStatus(tur) {
+    var len = tur.length;
+    var status = 0;
+    for (i = 0; i < len; i++) {
+        if (tur[i].status == 'ONLINE') {
+            status++; 
+        }
+    }
+    document.getElementById("numb_kpi_online").innerHTML = parseInt(status);
 }
 
 function filterByIDs() {
@@ -74,6 +86,23 @@ function filterByIDs() {
   }
 } 
 
+function filterDaily(input_json) {
+  var today = moment();
+  for i = 0 to {
+    var date = new Date(input_json[i].time);
+    var year = s.getFullYear();
+    var month = months[s.getMonth()];
+    var day = s.getDate();
+    if day == today {
+      //take that json part 
+    }
+    else{
+      //discard the json part 
+    }
+  }
+  return output_json //the filtered json with the timestamps related to today
+}
+
 function convertTimestamp(ts){
   var s = new Date(Math.round((ts.replace(/[^0-9]/g, ''))) * 1000);
   var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -93,7 +122,7 @@ function hideCardRange(fromCard, toCard) {
   //console.log("Card: " + stats.turbineId + " created!");
   var i;
   for (i = fromCard; i <= toCard; i++) { 
-    console.log("i " + i);
+    //console.log("i " + i);
     if($("#turb_" + i).length != 0){
       var template = $("#turb_" + i);
       template.hide()
@@ -163,6 +192,10 @@ function updateRealtimeDash(tur) {
   }
 }
 
+function updateKPIDash(tur){
+  //getTotalVoltage(tur);
+  getStatus(tur);
+}
 
 function getVoltage(tur, filteredId) {
   var len = tur.length;
