@@ -376,7 +376,7 @@ h1, h2, h3, h4, h5, h6,
 }
 
 h1, .h1 {
-    font-size: 2.5rem;
+    font-size: 3rem;
 }
 
 h2, .h2 {
@@ -600,8 +600,6 @@ pre {
     display: flex;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
-    margin-right: -0.75rem;
-    margin-left: -0.75rem;
 }
 
 .no-gutters {
@@ -2787,13 +2785,16 @@ fieldset:disabled a.btn {
 .btn-primary {
     color: #fff;
     background-color: #4e73df;
-    border-color: #4e73df;
 }
 
-    .btn-primary:hover {
+.btn-primary-gray {
+    color: #fff;
+    background-color: #858796;
+}
+
+    .btn-primary-gray:hover {
         color: #fff;
-        background-color: #2e59d9;
-        border-color: #2653d4;
+        background-color: #C0C2CE;
     }
 
     .btn-primary:focus, .btn-primary.focus {
@@ -8727,6 +8728,11 @@ button.bg-dark:focus {
     z-index: 1030;
 }
 
+.kpi_wrapper{
+    padding-left: 1rem;
+    padding-right: 1rem; 
+}
+
 @supports ((position: -webkit-sticky) or (position: sticky)) {
     .sticky-top {
         position: -webkit-sticky;
@@ -8906,7 +8912,7 @@ button.bg-dark:focus {
 
 .mt-2,
 .my-2 {
-    margin-top: 0.5rem !important;
+    margin-top: 0rem !important;
 }
 
 .mr-2,
@@ -8916,7 +8922,7 @@ button.bg-dark:focus {
 
 .mb-2,
 .my-2 {
-    margin-bottom: 0.5rem !important;
+    margin-bottom: 2rem !important;
 }
 
 .ml-2,
@@ -11155,11 +11161,11 @@ button.bg-dark:focus {
 }
 
 .text-primary-online {
-    color: green !important;
+    color: #4e73df !important;
 }
 
 .text-primary-offline {
-    color: red !important;
+    color: #5a5c69 !important;
 }
 
 a.text-primary:hover, a.text-primary:focus {
@@ -11329,6 +11335,10 @@ a.text-dark:hover, a.text-dark:focus {
 
     .navbar {
         display: none;
+    }
+
+    .navbar-filter {
+        padding-bottom: 0.75rem;
     }
 
     .badge {
@@ -11602,6 +11612,10 @@ a:focus {
     color: #f8f9fc !important;
 }
 
+.text-blue {
+    color: #4e73df !important;
+}
+
 .text-gray-200 {
     color: #eaecf4 !important;
 }
@@ -11654,11 +11668,11 @@ a:focus {
 }
 
 .border-left-primary-online {
-    border-left: 0.25rem solid green !important;
+    border-left: 0.25rem solid #4e73df !important;
 }
 
 .border-left-primary-offline {
-    border-left: 0.25rem solid red !important;
+    border-left: 0.25rem solid gray !important;
 }
 
 .border-bottom-primary {
