@@ -15,6 +15,7 @@
     <script type="text/javascript" src="get-turbines.js"></script>
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.css" rel="stylesheet">
+    <link href="css/animations.css" rel="stylesheet">
 </head>
 
 <body>
@@ -26,7 +27,7 @@
             <div id="content">
 
                 <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-6 static-top shadow">
                     <!-- Image Navbar -->
                     <div class="input-group">
                         <img src="img/logo.png">
@@ -41,7 +42,7 @@
                             <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-bell fa-fw"></i>
                                 <!-- Counter - Alerts -->
-                                <span class="badge badge-danger badge-counter">3+</span>
+                                <span class="badge badge-danger badge-counter">1</span>
                             </a>
                             <!-- Dropdown - Alerts -->
                             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
@@ -76,14 +77,6 @@
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Activity Log
-                                </a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -97,28 +90,28 @@
                 <!-- End of Topbar -->
 
                 <!-- Filters bar -->
-                <nav class="navbar navbar-expand navbar-light bg-blue topbar mb-2" id="accordionSidebar">
-                    <font color="white"><h4>Filters</h4><br><br></font>
+                <nav class="navbar navbar-expand navbar-light bg-blue topbar my-2 navbar-filter" id="accordionSidebar">
                     <!-- Sidebar - Brand -->
                     <font color="white"><h6>Turbine ID</h6></font>
-                        <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                            <div class="input-group">
-                                <input type="search" id="turbine_num" class="form-control bg-light border-0 small" placeholder="ex. 1-5" aria-label="Search" aria-describedby="basic-addon2">
-                                <div class="input-group-append">
-                                    <button class="btn btn-primary" type="button" onclick="filterByIDs()">
-                                        <i class="fas fa-search fa-sm"></i>
-                                    </button>
-                                </div>
+                    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                        <div class="input-group">
+                            <input type="search" id="turbine_num" class="form-control bg-light border-0 small" placeholder="ex. 1-5" aria-label="Search" aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary-gray " type="button" onclick="filterByIDs()">
+                                    <i class="fas fa-search fa-sm"></i>
+                                </button>
                             </div>
-                        </form>
+                        </div>
+                    </form>
 
                     <font color="white"><h6>Selected Period</h6></font>
                     <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
 
-                            <div id="reportrange" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
+                            <div id="reportrange" class="form-control bg-light border-0 small">
                                 <i class="fa fa-calendar"></i>&nbsp;
-                                <span id="reportrange_span">All time</span> <i class="fa fa-caret-down" onclick="daterangepickler()"></i>
+                                <span id="reportrange_span">All time</span> 
+                                <i class="fa fa-caret-down" onclick="daterangepickler()"></i>
                             </div>
                         </div>
                     </form>
@@ -129,29 +122,51 @@
                     <div class="Page row row-no-gutters">    
 
                         <!-- Page Heading -->
-                        <div class="col-md-10">
+                        <div class="col-md-12">
 
                             <!-- Title for KPIs-->
-                            <div class="d-sm-flex align-items-left justify-content-between mb-4">
+                            <div class="d-sm-flex align-items-center justify-content-between mb-4">
                                 <h1 class="h3 mb-0 text-gray-800">KPIs Dashboards</h1>
+                                <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
                             </div>
                             <!-- End of Title for KPIs-->
 
                             <!-- Content Row for KPIs-->
-                            <div class="row" id="kpis">
+                            <div class="row align-items-center" id="kpis" style="margin-left: 45px; padding-bottom: 1.5rem">
                                 <!-- KPIs Box -->
-                                <div class="card shadow h-100 py-2 border_color align-items-center">
-
+                                <div class="kpi_wrapper">
+                                <div class="card shadow h-100 py-2 border_color border-left-primary align-items-center">
                                     <div id="kpi" class="card-body">
                                         <div class="row no-gutters align-items-center">
-
                                             <div class="col mr-2">
-                                                <div id="kpi_totpow" class="text-xs font-weight-bold text-uppercase mb-1 number_id title-color"> Total Power: </div><br>
-                                                <p id="numb_kpi_totpow" class="volt"></p>
+                                                <div id="kpi_totpow" class="text-xs text-blue font-weight-bold text-uppercase mb-1 number_id title-color"> Total Power: 
+                                                </div><br>
+                                                <p id="numb_kpi_totpow"></p>
                                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
                                                     <div id="kpi_box"> 
+                                                    </div>
                                                 </div>
                                             </div>
+                                            <div class="col-auto">
+                                                <i class="fas fa-bolt fa-2x text-gray-300"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+
+                                <div class="kpi_wrapper">
+                                <div class="card shadow h-100 py-2 border_color border-left-primary">
+                                    <div id="kpi" class="card-body">
+                                        <div class="row align-items-center">
+                                            <div class="col mr-2">
+                                                <div id="kpi_online" class="text-xs text-blue font-weight-bold text-uppercase mb-1 number_id title-color"> Total Online: 
+                                                </div><br>
+                                                <p id="numb_kpi_online"> </p>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                    <div id="kpi_box"> 
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="col-auto">
                                                 <i class="fas fa-bolt fa-2x text-gray-300"></i>
@@ -159,19 +174,20 @@
                                         </div>
                                     </div>
                                 </div>
+                                </div>
 
-                                <div class="card shadow h-100 py-2 border_color">
-
+                                <div class="kpi_wrapper">
+                                <div class="card shadow h-100 py-2 border_color border-left-primary">
                                     <div id="kpi" class="card-body">
-                                        <div class="row no-gutters align-items-center">
+                                        <div class="row align-items-center">
                                             <div class="col mr-2">
-                                                <div id="kpi_online" class="text-xs font-weight-bold text-uppercase mb-1 number_id title-color"> Total Online: </div><br>
-                                                <p id="numb_kpi_online" class="volt"> </p>
+                                                <div id="kpi_offline" class="text-xs text-blue font-weight-bold text-uppercase mb-1 number_id title-color"> Total Offline: 
+                                                </div><br>
+                                                <p id="numb_kpi_offline"> </p>
                                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
                                                     <div id="kpi_box"> 
                                                     </div>
-                                            </div>
-
+                                                </div>
                                             </div>
                                             <div class="col-auto">
                                                 <i class="fas fa-bolt fa-2x text-gray-300"></i>
@@ -179,25 +195,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="card shadow h-100 py-2 border_color">
-
-                                    <div id="kpi" class="card-body">
-                                        <div class="row no-gutters align-items-center">
-                                            <div class="col mr-2">
-                                                <div id="kpi_offline" class="text-xs font-weight-bold text-uppercase mb-1 number_id title-color"> Total Offline: </div><br>
-                                                <p id="numb_kpi_offline" class="volt"> </p>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                    <div id="kpi_box"> 
-                                                    </div>
-                                            </div>
-
-                                            </div>
-                                            <div class="col-auto">
-                                                <i class="fas fa-bolt fa-2x text-gray-300"></i>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
 
                             </div>
@@ -206,8 +203,6 @@
                             <!-- Title for Real-Time Data-->
                             <div class="d-sm-flex align-items-center justify-content-between mb-4">
                                 <h1 class="h3 mb-0 text-gray-800">Real-Time Dashboards</h1>
-
-                                <!--<a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>-->
                             </div>
                             <!-- End Title for Real-Time Data-->
 
