@@ -1,6 +1,12 @@
 window.HistData = 0;
+var clock;
+
+function refresh_data_history_Line() {
+  clock = setInterval(callAPIForHistoricalDataLine, 10000);
+}
+
 function callAPIForHistoricalDataLine() {
-    console.log("callAPIForHistoricalData");
+    console.log("callAPIForHistoricalDataPie");
     $.ajax({
         //url: 'https://a4girz51oh.execute-api.us-east-1.amazonaws.com/return/1?recordTime=1', //FIXME: get the actual link
         url: 'https://1xwt8lhj3l.execute-api.eu-central-1.amazonaws.com/turbinestats/all?id=turbine',
@@ -14,9 +20,7 @@ function callAPIForHistoricalDataLine() {
             handleException(request, message, error);
         }
     });
-
-    console.log(window.HistData);
-
+    //console.log(window.HistData);
 }
 
 function createChartLine(histDataLocal) {
