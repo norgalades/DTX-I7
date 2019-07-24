@@ -39,6 +39,35 @@ function daterangepickler() {
   cb(start, end);
 }
 
+/* 
+//More turbines to be shown!!!!!!!!!! 
+function callAPI(){
+  $.ajax({
+    //url: 'https://a4girz51oh.execute-api.us-east-1.amazonaws.com/return/1?recordTime=1', //FIXME: get the actual link
+    //url: 'https://1xwt8lhj3l.execute-api.eu-central-1.amazonaws.com/turbinestats/all?id=turbine',
+    url: 'https://1xwt8lhj3l.execute-api.eu-central-1.amazonaws.com/turbinestats/latest?id=turbine',
+    type: 'GET',
+    dataType: 'json',
+    success: function (response) {
+      var len = tur.length;
+      window.tur = response.record;
+      arr = [];
+      var i = 1;
+      index = 0;
+      for (i = 1; i <= 66; i++) {
+        obj = window.tur[index];
+        obj.turbineId = i;
+        arr.push(obj)
+        index = (index + 1) % (len-1)
+      }
+      window.tur = arr;
+    },
+    error: function (request, message, error) {
+      handleException(request, message, error);
+    }
+  });
+}
+*/
 function callAPI(){
   $.ajax({
     //url: 'https://a4girz51oh.execute-api.us-east-1.amazonaws.com/return/1?recordTime=1', //FIXME: get the actual link
