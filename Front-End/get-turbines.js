@@ -6,6 +6,30 @@ function refresh_data() {
   clock = setInterval(getJSON, 1000);
 }
 
+function cb(start, end) {
+    if(start == "" && end == "")
+      document.getElementById("reportrange_span").innerHTML = String("Weird");
+    else
+      document.getElementById("reportrange_span").innerHTML = String(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+}
+
+function daterangepickler() {
+  var start = moment().subtract(29, 'days');
+  var end = moment();
+
+  $('#reportrange').daterangepicker({
+      startDate: start,
+      endDate: end,
+      ranges: {
+         'Today': [moment(), moment()],
+         'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+         'Last 30 Days': [moment().subtract(29, 'days'), moment()]
+      }
+  }, cb);
+
+  cb(start, end);
+}
+
 function callAPI(){
   $.ajax({
     //url: 'https://a4girz51oh.execute-api.us-east-1.amazonaws.com/return/1?recordTime=1', //FIXME: get the actual link
