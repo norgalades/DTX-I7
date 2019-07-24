@@ -1,9 +1,18 @@
 window.tur = 100;
-
 var clock;
 
 function refresh_data() {
   clock = setInterval(getJSON, 1000);
+}
+
+/*************************************jQuery Functions****************************************************/
+
+$("#turb_online").change(function sendAlert(){});
+
+/*************************************End of jQuery*******************************************************/
+
+function sendAlert(){
+  alert("A turbine is offline!!!");
 }
 
 function cb(start, end) {
@@ -54,38 +63,73 @@ function getJSON() {
 }
 
 function getStatus(tur) {
-    var len = tur.length;
-    var status = 0;
-    for (i = 0; i < len; i++) {
-        if (tur[i].status == 'ONLINE') {
-            status++; 
-        }
+    var online = 0;
+    var offline = 0;
+    for (i = 1; i <= 66; i++) { 
+      if($("#turb_" + i).length != 0){
+        var template = $("#turb_" + i);
+        if(template.find("#turb_online").length != 0)
+          online++;
+        else 
+          offline++;
+      }
     }
-    document.getElementById("numb_kpi_online").innerHTML = parseInt(status);
-    status = 0; 
+    document.getElementById("numb_kpi_online").innerHTML = online;
+    document.getElementById("numb_kpi_offline").innerHTML = offline;
 }
+
+function computeTurbPower(turb){
+  var pow = parseFloat(turb.windSpeed * turb.windSpeed * turb.windSpeed * 0.158 * 0.158 * 1.57).toFixed(4);
+  return pow;
+}
+
+function calcPower(tur) {
+    var len = tur.length;
+    var pow = [0, 0, 0];
+    var tot = 0;
+  
+    for (i = 1; i <= 66; i++) { 
+      if($("#turb_" + i).length != 0){
+       var template = $("#turb_" + i);
+       tot += parseFloat(String(template.find(".power").text()).replace("Power: ", '').replace(" W", ''));
+      }
+    }
+    document.getElementById("numb_kpi_totpow").innerHTML = tot.toFixed(4);
+  }
 
 function filterByIDs() {
   //Get the extreme of the filtering range
   
   var id = document.getElementById("turbine_num").value; //ex. 2-66
-  if(id.trim() == ""){
-    showCardRange(1, 66);
-  }else{  
-    var from = id.trim().match(/^([0-9])+/g);
-    var too = id.trim().match(/(-)([ \t])*([0-9])+/g);
-
-    if(too == null){
-      to = from; 
-    }else{
-      var to = String(too).match(/([0-9])+/g);
-    }
-
-    hideCardRange(0, (parseInt(from)-1)); 
-    showCardRange(from, to);
-    hideCardRange((parseInt(to)+1), 66);
+   if(id.trim() == ""){
+      showCardRange(1, 66);
+    }else{  
+      if(id.includes('-')){
+        arr = id.split('-');
+        console.log(arr);
+        from = arr[0].trim();
+        to = arr[1].trim();
+        if(to == null){
+          to = from; 
+        }
+        hideCardRange(0, (parseInt(from)-1)); 
+        showCardRange(from, to);
+        hideCardRange((parseInt(to)+1), 66);
+      }else if(id.includes(',')){
+        arr = id.split(',')
+        hideCardRange(0, 66);
+        for(i = 0; i < arr.length; i++){
+          showCardRange(arr[i],arr[i]);
+        }
+      }else{
+        to = id.trim();
+        from = to;
+        hideCardRange(0, (parseInt(from)-1)); 
+        showCardRange(from, to);
+        hideCardRange((parseInt(to)+1), 66);
+      }
   }
-} 
+}  
 
 function filterDaily(input_json) {
   var today = moment();
@@ -150,23 +194,24 @@ function modifyTurbineCard(stats){
   //console.log(template.find(".number_id"));
   template.find(".number_id").text("Turbine ID:    " + stats.turbineId);
   template.find(".volt").text("Voltage: " + stats.voltage);
-  template.find(".temp").text("Temperature: " + stats.temp);
-  template.find(".windspeed").text("Wind Speed: " + stats.windSpeed);
-  template.find(".power").text("Power: " + "60 MW");
-  template.find(".direction").text("Direction: " + "EST");
-  template.find(".unk").text("Current: " + "UNK");
+  template.find(".temp").text("Temperature: " + stats.temp + " F");
+  template.find(".windspeed").text("Wind Speed: " + String(parseFloat(stats.windSpeed).toFixed(4)) + " m/s");
+  template.find(".power").text("Power: " + computeTurbPower(stats) + " W");
   //console.log(parseInt(stats.time.substring(0,10)))
-  template.find(".time").text("Timestamp: " + new Date(parseInt(stats.time.substring(0,10)) * 1000));
+  template.find(".time").text("Date: " + new Date(parseInt(stats.time.substring(0,10)) * 1000));
 
   //Modifica card color with respect to the status
   var border = template.find(".border_color");
   var title =  template.find(".title_color");
+  var card = template.find("#turb_online");
   if (stats.status == "ONLINE"){ 
     //console.log(title);
+    card.attr("id", "turb_online");
     border.attr("class", "card shadow h-100 py-2 card_color border-left-primary-online");
     title.attr("class", "text-xs font-weight-bold text-uppercase mb-1 number_id title-color text-primary-online");
   }
   else {
+    card.attr("id", "turb_offline");
     border.attr("class", "card shadow h-100 py-2 card_color border-left-primary-offline");
     title.attr("class", "title-color text-xs font-weight-bold text-uppercase mb-1 number_id text-primary-offline");
   }
@@ -197,8 +242,8 @@ function updateRealtimeDash(tur) {
 }
 
 function updateKPIDash(tur){
-  //getTotalVoltage(tur);
   getStatus(tur);
+  calcPower(tur);
 }
 
 function getVoltage(tur, filteredId) {
