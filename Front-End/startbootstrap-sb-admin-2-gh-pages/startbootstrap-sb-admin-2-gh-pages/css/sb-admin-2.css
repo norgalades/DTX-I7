@@ -7209,6 +7209,10 @@ button.bg-danger:focus {
     background-color: #f8f9fc !important;
 }
 
+.bg-blue {
+    background-color: #4e73df !important;
+}
+
 a.bg-light:hover, a.bg-light:focus,
 button.bg-light:hover,
 button.bg-light:focus {
@@ -12470,13 +12474,21 @@ a:focus {
     }
 }
 
-.chart-pie {
-    position: relative;
-    height: 15rem;
+
+.Chart2{
+    margin-top:00px;
+    margin-left:0px;
+    left: 50px;
     width: 100%;
 }
 
-@media (min-width: 768px) {
+.chart-pie {
+    position: relative;
+    height: 25rem;
+    width: 100%;
+}
+
+@media (min-width: 968px) {
     .chart-pie {
         height: calc(20rem - 43px) !important;
     }
@@ -12967,13 +12979,13 @@ form.user .btn-user {
 }
 
 .Data-Row{
-    left:200px;
+    left:50px;
 }
 
-
-
 .Chart1{
-    left: 210px;
+    position: relative;
+    left: 50px;
+    margin-top:00px;
 }
 
 
