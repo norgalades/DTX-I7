@@ -81,32 +81,23 @@ function createChart(histDataLocal) {
             tempArray[3] += parseFloat(histDataLocal[i].temp);
         }
     }
-  
- 
-
     var volLen = [];
     for (var j = 0; j < voltArray.length; j++) {
        
         volLen[j] = j;
     }
-    console.log(tempArray);
-    console.log(voltArray);
-    console.log(count);
-
     voltArray[0] = voltArray[0] / count[0];
     voltArray[1] = voltArray[1] / count[1];
     voltArray[2] = voltArray[2] / count[2];
-
-    console.log(voltArray);
    
     // Area Chart Example
     var ctx = document.getElementById("myAreaChart");
     var myLineChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ['1','2','3'],
+            labels: ['Turbine 1','Turbine 2','Turbine 3'],
             datasets: [{
-                label: "Temperature",
+                label: "Voltage",
                 lineTension: 0.3,
                 backgroundColor: "rgba(78, 115, 223, 0.05)",
                 borderColor: "rgba(78, 115, 223, 1)",
@@ -150,7 +141,8 @@ function createChart(histDataLocal) {
                         padding: 10,
                         // Include a dollar sign in the ticks
                         callback: function (value, index, values) {
-                            return '' + number_format(value);
+                            //return '' + number_format(value);
+                            return '' + value;
                         }
                     },
                     gridLines: {
@@ -182,7 +174,7 @@ function createChart(histDataLocal) {
                 callbacks: {
                     label: function (tooltipItem, chart) {
                         var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-                        return datasetLabel + ': ' + number_format(tooltipItem.yLabel);
+                        return datasetLabel + ': ' + tooltipItem.yLabel.toFixed(4);
                     }
                 }
             }
