@@ -96,39 +96,38 @@
                 </nav>
                 <!-- End of Topbar -->
 
+                <!-- Filters bar -->
+                <nav class="navbar navbar-expand navbar-light bg-blue topbar mb-2" id="accordionSidebar">
+                    <font color="white"><h4>Filters</h4><br><br></font>
+                    <!-- Sidebar - Brand -->
+                    <font color="white"><h6>Turbine ID</h6></font>
+                        <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                            <div class="input-group">
+                                <input type="search" id="turbine_num" class="form-control bg-light border-0 small" placeholder="ex. 1-5" aria-label="Search" aria-describedby="basic-addon2">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="button" onclick="filterByIDs()">
+                                        <i class="fas fa-search fa-sm"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+
+                    <font color="white"><h6>Custom Period</h6></font>
+                    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                        <div class="input-group">
+
+                            <div id="reportrange" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
+                                <i class="fa fa-calendar"></i>&nbsp;
+                                <span id="reportrange_span">All time</span> <i class="fa fa-caret-down" onclick="daterangepickler()"></i>
+                            </div>
+                        </div>
+                    </form>
+                </nav>
+                
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <div class="Page row row-no-gutters">    
-                        <!-- Sidebar -->
-                        <ul class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" id="accordionSidebar">
-                            <font color="white"><h4>Filters</h4><br><br></font>
-                            <li>
-                            <!-- Sidebar - Brand -->
-                            <font color="#2e59d9"><h6>Turbine ID</h6></font>
-                                <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                                    <div class="input-group">
-                                        <input type="search" id="turbine_num" class="form-control bg-light border-0 small" placeholder="ex. 1-5" aria-label="Search" aria-describedby="basic-addon2">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button" onclick="filterByIDs()">
-                                                <i class="fas fa-search fa-sm"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </li>
-                            <li>
-                            <font color="#2e59d9"><h6><br><br>Custom Period</h6></font>
-                            <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                                <div class="input-group">
 
-                                    <div id="reportrange" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
-                                        <i class="fa fa-calendar"></i>&nbsp;
-                                        <span id="reportrange_span">All time</span> <i class="fa fa-caret-down" onclick="daterangepickler()"></i>
-                                    </div>
-                                </div>
-                            </form>
-                            </li>
-                        </ul>
                         <!-- Page Heading -->
                         <div class="col-md-10">
 
