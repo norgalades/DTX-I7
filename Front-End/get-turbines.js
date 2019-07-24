@@ -28,19 +28,26 @@ function getJSON() {
   updateRealtimeDash(window.tur)
 }
 
-function filterById() {
-  var id = document.getElementById("turbine_num").value; //ex. 2-66
-  var from = id.match(/([0-9])+(-)/g);
-  from = from.replace(/(-)/g, '');
-  var to = id.match(/(-)([0-9])+/g);
-  to = to.replace(/(-)/g, '');
-
+function filterByIDs() {
+  //Get the extreme of the filtering range
   
-  getData(window.tur, id);
-  getWindSpeed(window.tur, id);
-  console.log(id);
-  getVoltage(window.tur, id);
-  getTemp(window.tur, id);
+  var id = document.getElementById("turbine_num").value; //ex. 2-66
+  if(id.trim() == ""){
+    showCardRange(1, 66);
+  }else{  
+    var from = id.trim().match(/^([0-9])+/g);
+    var too = id.trim().match(/(-)([ \t])*([0-9])+/g);
+
+    if(too == null){
+      to = from; 
+    }else{
+      var to = String(too).match(/([0-9])+/g);
+    }
+
+    hideCardRange(0, (parseInt(from)-1)); 
+    showCardRange(from, to);
+    hideCardRange((parseInt(to)+1), 66);
+  }
 } 
 
 function convertTimestamp(ts){
@@ -54,8 +61,31 @@ function convertTimestamp(ts){
   var sec = s.getSeconds();
   var time = String(date) + '-' + String(month) + '-'+"2019" + ' ' + hour + ':' + min + ':' + sec ;
   //console.log(String(date) + " time: " + time);
-  console.log(" time: " + time);
+  //console.log(" time: " + time);
   return time;
+}
+
+function hideCardRange(fromCard, toCard) {
+  //console.log("Card: " + stats.turbineId + " created!");
+  var i;
+  for (i = fromCard; i <= toCard; i++) { 
+    console.log("i " + i);
+    if($("#turb_" + i).length != 0){
+      var template = $("#turb_" + i);
+      template.hide()
+    }
+  }
+}
+
+function showCardRange(fromCard, toCard) {
+  //console.log("Card: " + stats.turbineId + " created!");
+  var i;
+  for (i = fromCard; i <= toCard; i++) { 
+    if($("#turb_" + i).length != 0){
+      var template = $("#turb_" + i);
+      template.show()
+    }
+  }
 }
 
 function modifyTurbineCard(stats){
@@ -68,14 +98,14 @@ function modifyTurbineCard(stats){
   template.find(".power").text("Power: " + "60 MW");
   template.find(".direction").text("Direction: " + "EST");
   template.find(".unk").text("Current: " + "UNK");
-  console.log(parseInt(stats.time.substring(0,10)))
+  //console.log(parseInt(stats.time.substring(0,10)))
   template.find(".time").text("Timestamp: " + new Date(parseInt(stats.time.substring(0,10)) * 1000));
 
   //Modifica card color with respect to the status
   var border = template.find(".border_color");
   var title =  template.find(".title_color");
   if (stats.status == "ONLINE"){ 
-    console.log(title);
+    //console.log(title);
     border.attr("class", "card shadow h-100 py-2 card_color border-left-primary-online");
     title.attr("class", "text-xs font-weight-bold text-uppercase mb-1 number_id title-color text-primary-online");
   }
