@@ -62,6 +62,7 @@ function getStatus(tur) {
         }
     }
     document.getElementById("numb_kpi_online").innerHTML = parseInt(status);
+    status = 0; 
 }
 
 function filterByIDs() {
@@ -88,6 +89,7 @@ function filterByIDs() {
 
 function filterDaily(input_json) {
   var today = moment();
+  /*
   for i = 0 to {
     var date = new Date(input_json[i].time);
     var year = s.getFullYear();
@@ -99,7 +101,9 @@ function filterDaily(input_json) {
     else{
       //discard the json part 
     }
+
   }
+  */
   return output_json //the filtered json with the timestamps related to today
 }
 
