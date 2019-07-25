@@ -15,42 +15,6 @@ function sendAlert(){
   alert("A turbine is offline!!!");
 }
 
-function cb(start, end) {
-    if(start == "" && end == "")
-      document.getElementById("reportrange_span").innerHTML = String("Weird");
-    else
-      document.getElementById("reportrange_span").innerHTML = String(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-    out_json = dateFilter(start, end, window.tur);
-    console.log(typeof out_json);
-}
-
-function dateFilter(startDate, endDate, in_json){
-  //console.log("filtering... " + startDate + " - " + endDate);
-  var out_json = in_json.filter(function(elem) {
-      if (elem.time >= (startDate/1000) && elem.time <= (endDate/1000)) {
-        return true;
-      } 
-  });
-  console.log("out_json: " + typeof out_json);
-}
-
-function daterangepickler() {
-  var start = moment().subtract(29, 'days');
-  var end = moment();
-
-  $('#reportrange').daterangepicker({
-      startDate: start,
-      endDate: end,
-      ranges: {
-         'Today': [moment(), moment()],
-         'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-         'Last 30 Days': [moment().subtract(29, 'days'), moment()]
-      }
-  }, cb);
-
-  //cb(start, end);
-}
-
 /* 
 //More turbines to be shown!!!!!!!!!! 
 function callAPI(){
