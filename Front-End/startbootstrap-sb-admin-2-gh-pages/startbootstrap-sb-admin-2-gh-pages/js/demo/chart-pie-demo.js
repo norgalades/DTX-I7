@@ -6,7 +6,7 @@ function refresh_data_history_Line() {
 }
 
 function callAPIForHistoricalDataLine() {
-    console.log("callAPIForHistoricalDataPie");
+    //console.log("callAPIForHistoricalDataPie");
     $.ajax({
         //url: 'https://a4girz51oh.execute-api.us-east-1.amazonaws.com/return/1?recordTime=1', //FIXME: get the actual link
         url: 'https://1xwt8lhj3l.execute-api.eu-central-1.amazonaws.com/turbinestats/all?id=turbine',
@@ -14,7 +14,12 @@ function callAPIForHistoricalDataLine() {
         dataType: 'json',
         success: function (response) {
             window.HistData = response.record;
-            createChartLine(window.HistData);
+            if (window.filterActive){
+                createChartLine(window.HistDataFiltered);
+            }
+            else{
+                createChartLine(window.HistData);
+            }
         },
         error: function (request, message, error) {
             handleException(request, message, error);
@@ -24,7 +29,6 @@ function callAPIForHistoricalDataLine() {
 }
 
 function createChartLine(histDataLocal) {
-
     var count = [0, 0, 0, 0];
     var voltArray = [0, 0, 0, 0];
     var tempArray = [0, 0, 0, 0];
@@ -61,30 +65,24 @@ function createChartLine(histDataLocal) {
 
         volLen[j] = j;
     }
-    console.log(tempArray);
-    console.log(voltArray);
-    console.log(count);
     tempArray[0] = 0;
     tempArray[1] = tempArray[1] / count[0];
     tempArray[2] = tempArray[2] / count[1];
     tempArray[3] = tempArray[3] / count[2];
-
-    console.log(tempArray);
-
-
     // Set new default font family and font color to mimic Bootstrap's default styling
     Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
     Chart.defaults.global.defaultFontColor = '#858796';
     // Pie Chart Example
     var ctx = document.getElementById("myPieChart");
     var myBarChart = new Chart(ctx, {
-        type: 'line',
+        type: 'bar',
         data: {
-            labels: ["1", "2", "3"],
+            labels: ["Turbine 1", "Turbine 2", "Turbine 3"],
             datasets: [{
                 label: "Temperature",
-                hoverBackgroundColor: "#2e59d9",
-                borderColor: "#4e73df",
+                backgroundColor: "rgba(78, 115, 223, 0.05)",
+                hoverBackgroundColor: "rgba(78, 115, 223, 0.05)",
+                borderColor: "rgba(78, 115, 223, 0.05)",
                 data: tempArray,
             }],
         },

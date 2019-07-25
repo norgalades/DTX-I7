@@ -1,4 +1,6 @@
 window.HistData = 0;
+window.HistDataFiltered = 0; 
+window.filterActive = false;
 var clock;
 
 function refresh_data_history() {
@@ -6,7 +8,7 @@ function refresh_data_history() {
 }
 
 function callAPIForHistoricalData() {
-    console.log("callAPIForHistoricalDataArea");
+    //console.log("callAPIForHistoricalDataArea");
     $.ajax({
         //url: 'https://a4girz51oh.execute-api.us-east-1.amazonaws.com/return/1?recordTime=1', //FIXME: get the actual link
         url: 'https://1xwt8lhj3l.execute-api.eu-central-1.amazonaws.com/turbinestats/all?id=turbine',
@@ -14,7 +16,12 @@ function callAPIForHistoricalData() {
         dataType: 'json',
         success: function (response) {
             window.HistData = response.record;
-            createChart(window.HistData);
+            if (window.filterActive){
+                createChart(window.HistDataFiltered);
+            }
+            else{
+                createChart(window.HistData);
+            }
         },
         error: function (request, message, error) {
             handleException(request, message, error);
@@ -22,6 +29,49 @@ function callAPIForHistoricalData() {
     });
     //console.log(window.HistData); 
 }
+
+function cb(start, end) {
+    if(start == "" && end == ""){
+      document.getElementById("reportrange_span").innerHTML = String("Weird");
+    }
+    else{
+      document.getElementById("reportrange_span").innerHTML = String(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+      filterActive = true;
+    }
+    window.HistDataFiltered = dateFilter(start, end, window.HistData);
+    console.log("filtered: " + JSON.stringify(window.HistDataFiltered));
+}
+
+function dateFilter(startDate, endDate, in_json){
+  console.log("filtering... " + startDate + " - " + endDate);
+  console.log("in_json: " + JSON.stringify(in_json));
+  var out_json = in_json.filter(function(elem) {
+      if (elem.time >= (startDate/1000) && elem.time <= (endDate/1000)) {
+        console.log("elem: " + JSON.stringify(elem));
+        return true;
+      } 
+  });
+  console.log("out_json: " + JSON.stringify(out_json));
+  return out_json;
+}
+
+function daterangepickler() {
+  var start = moment().subtract(29, 'days');
+  var end = moment();
+
+  $('#reportrange').daterangepicker({
+      startDate: start,
+      endDate: end,
+      ranges: {
+         'Today': [moment(), moment()],
+         'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+         'Last 30 Days': [moment().subtract(29, 'days'), moment()]
+      }
+  }, cb);
+
+  //cb(start, end);
+}
+
 // Set new default font family and font color to mimic Bootstrap's default styling
 Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 Chart.defaults.global.defaultFontColor = '#858796';
