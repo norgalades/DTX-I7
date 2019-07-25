@@ -1,5 +1,6 @@
-window.tur = 100;
+var tur = 100;
 var clock;
+var temperatureFilter = 1000;
 
 function refresh_data() {
   clock = setInterval(getJSON, 1000);
@@ -15,6 +16,15 @@ function sendAlert(){
   alert("A turbine is offline!!!");
 }
 
+function filterByTemp() {
+  if(parseFloat(document.getElementById("temperatureNum").value === "")){
+   temperatureFilter = 1000;
+  }else{
+    temperatureFilter = parseFloat(document.getElementById("temperatureNum").value); //ex.
+  }
+  console.log(temperatureFilter)
+}
+
 /* 
 //More turbines to be shown!!!!!!!!!! 
 function callAPI(){
@@ -26,17 +36,17 @@ function callAPI(){
     dataType: 'json',
     success: function (response) {
       var len = tur.length;
-      window.tur = response.record;
+      tur = response.record;
       arr = [];
       var i = 1;
       index = 0;
       for (i = 1; i <= 66; i++) {
-        obj = window.tur[index];
+        obj = tur[index];
         obj.turbineId = i;
         arr.push(obj)
         index = (index + 1) % (len-1)
       }
-      window.tur = arr;
+      tur = arr;
     },
     error: function (request, message, error) {
       handleException(request, message, error);
@@ -52,7 +62,7 @@ function callAPI(){
     type: 'GET',
     dataType: 'json',
     success: function (response) {
-      window.tur = response.record;
+      tur = response.record;
     },
     error: function (request, message, error) {
       handleException(request, message, error);
@@ -63,8 +73,8 @@ function callAPI(){
 function getJSON() {
   //console.log("Another call!")
   callAPI();
-  updateRealtimeDash(window.tur);
-  updateKPIDash(window.tur);
+  updateRealtimeDash(tur);
+  updateKPIDash(tur);
 }
 
 function getStatus(tur) {
@@ -203,22 +213,37 @@ function modifyTurbineCard(stats){
   template.find(".windspeed").text("Wind Speed: " + String(parseFloat(stats.windSpeed).toFixed(4)) + " m/s");
   template.find(".power").text("Power: " + computeTurbPower(stats) + " W");
   //console.log(parseInt(stats.time.substring(0,10)))
-  template.find(".time").text("Date: " + new Date(parseInt(stats.time.substring(0,10)) * 1000));
+    template.find(".time").text("Date: " + new Date(parseInt(stats.time.substring(0, 10)) * 1000));
+        var icon = template.find("#Icon_Auto");
 
   //Modifica card color with respect to the status
   var border = template.find(".border_color");
   var title =  template.find(".title_color");
-  var card = template.find("#turb_online");
+    var card = template.find("#turb_online");
+    var icon = template.find("#Icon_Auto");
+    if (parseFloat(stats.temp) > temperatureFilter) {
+        template.find(".temp").attr("style", "color:red");
+    } else {
+        template.find(".temp").attr("style", "");
+    }
+
+
   if (stats.status == "ONLINE"){ 
     //console.log(title);
     card.attr("id", "turb_online");
     border.attr("class", "card shadow h-100 py-2 card_color border-left-primary-online");
     title.attr("class", "text-xs font-weight-bold text-uppercase mb-1 number_id title-color text-primary-online");
+    icon.attr("style", "color: #4e73df");
+
+
   }
   else {
     card.attr("id", "turb_offline");
     border.attr("class", "card shadow h-100 py-2 card_color border-left-primary-offline");
     title.attr("class", "title-color text-xs font-weight-bold text-uppercase mb-1 number_id text-primary-offline");
+    icon.attr("style", "color: red");
+
+
   }
 
 }
