@@ -3,12 +3,14 @@ var clock;
 var temperatureFilter = 1000;
 
 function refresh_data() {
-  clock = setInterval(getJSON, 1000);
+  clock = setInterval(getJSON, 100);
 }
 
 /*************************************jQuery Functions****************************************************/
 
-$("#turb_online").change(function sendEmailAlert(){});
+$("#turb_online").change(function sendAlert() { });
+
+
 
 /*************************************End of jQuery*******************************************************/
 
@@ -205,15 +207,18 @@ function showCardRange(fromCard, toCard) {
 }
 
 function modifyTurbineCard(stats){
-  var template = $("#turb_" + stats.turbineId);
-  //console.log(template.find(".number_id"));
-  template.find(".number_id").text("Turbine ID:    " + stats.turbineId);
-  template.find(".volt").text("Voltage: " + stats.voltage);
-  template.find(".temp").text("Temperature: " + stats.temp + " F");
-  template.find(".windspeed").text("Wind Speed: " + String(parseFloat(stats.windSpeed).toFixed(4)) + " m/s");
-  template.find(".power").text("Power: " + computeTurbPower(stats) + " W");
-  //console.log(parseInt(stats.time.substring(0,10)))
-    template.find(".time").text("Date: " + new Date(parseInt(stats.time.substring(0, 10)) * 1000));
+    var template = $("#turb_" + stats.turbineId);
+    var currentDate = Date.parse(template.find(".time").text().replace("Date: ", ""))
+    if (currentDate < (parseInt(stats.time) * 1000) || template.find(".time").text().localeCompare("Time: ")) {
+        template.find(".number_id").text("Turbine ID:    " + stats.turbineId);
+        template.find(".volt").text("Voltage: " + stats.voltage);
+        template.find(".temp").text("Temperature: " + stats.temp + " F");
+        template.find(".windspeed").text("Wind Speed: " + String(parseFloat(stats.windSpeed).toFixed(4)) + " m/s");
+        template.find(".power").text("Power: " + computeTurbPower(stats) + " W");
+        //console.log(parseInt(stats.time.substring(0,10)))
+        template.find(".time").text("Date: " + new Date(parseInt(stats.time.substring(0, 10)) * 1000));
+
+    }
         var icon = template.find("#Icon_Auto");
 
   //Modifica card color with respect to the status
