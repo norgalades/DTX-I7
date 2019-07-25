@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿Mic<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -104,13 +104,26 @@
                         </div>
                     </form>
 
+
+                    <font color="white"><h6>Temperature</h6></font>
+                    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                        <div class="input-group">
+                            <input type="search" id="temperatureNum" class="form-control bg-light border-0 small" placeholder="ex. 75" aria-label="Search" aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary-gray " type="button" onclick="filterByTemp()">
+                                    <i class="fas fa-search fa-sm"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
                     <font color="white"><h6>Selected Period</h6></font>
                     <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
 
                             <div id="reportrange" class="form-control bg-light border-0 small">
                                 <i class="fa fa-calendar"></i>&nbsp;
-                                <span id="reportrange_span">All time</span> 
+                                <span id="reportrange_span">All time</span>
                                 <i class="fa fa-caret-down" onclick="daterangepickler()"></i>
                             </div>
                         </div>
@@ -148,7 +161,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-auto">
-                                                <i class="fas fa-bolt fa-2x text-gray-300"></i>
+                                                <i class='fas fa-bolt fa-2x ' style='color:#4e73df'></i>
                                             </div>
                                         </div>
                                     </div>
@@ -169,7 +182,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-auto">
-                                                <i class="fas fa-bolt fa-2x text-gray-300"></i>
+                                                <i class='fas fa-power-off fa-2x' style='color:#4e73df'></i>
                                             </div>
                                         </div>
                                     </div>
@@ -190,8 +203,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-auto">
-                                                <i class="fas fa-bolt fa-2x text-gray-300"></i>
-                                            </div>
+                                                <i class='fas fa-power-off fa-2x' style='color:red'></i>                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -230,8 +242,7 @@
 
                                                 </div>
                                                 <div class="col-auto">
-                                                    <i class="fas fa-bolt fa-2x text-gray-300"></i>
-                                                </div>
+                                                    <i id="Icon_Auto" class='fas fa-tachometer-alt fa-2x' style='color:#4e73df'></i>                                                </div>
                                             </div>
                                         </div>
                                     </div>
