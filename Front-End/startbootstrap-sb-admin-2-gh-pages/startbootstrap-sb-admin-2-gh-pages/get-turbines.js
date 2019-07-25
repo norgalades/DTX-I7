@@ -20,6 +20,18 @@ function cb(start, end) {
       document.getElementById("reportrange_span").innerHTML = String("Weird");
     else
       document.getElementById("reportrange_span").innerHTML = String(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+    out_json = dateFilter(start, end, window.tur);
+    console.log(typeof out_json);
+}
+
+function dateFilter(startDate, endDate, in_json){
+  //console.log("filtering... " + startDate + " - " + endDate);
+  var out_json = in_json.filter(function(elem) {
+      if (elem.time >= (startDate/1000) && elem.time <= (endDate/1000)) {
+        return true;
+      } 
+  });
+  console.log("out_json: " + typeof out_json);
 }
 
 function daterangepickler() {
@@ -36,7 +48,7 @@ function daterangepickler() {
       }
   }, cb);
 
-  cb(start, end);
+  //cb(start, end);
 }
 
 /* 
