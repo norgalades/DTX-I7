@@ -8,14 +8,23 @@ function refresh_data() {
 
 /*************************************jQuery Functions****************************************************/
 
-$("#turb_online").change(function sendAlert() { });
-
-
+$("#turb_online").change(function runPython(){});
 
 /*************************************End of jQuery*******************************************************/
 
 function sendAlert(){
   alert("A turbine is offline!!!");
+}
+
+function runPython()
+{
+    $.ajax({
+    type: "POST",
+    //url: "/var/www/html/startbootstrap-sb-admin-2-gh-pages/startbootstrap-sb-admin-2-gh-pages/aws-sns.py",
+    url: "",
+    data :{},
+    success: sendAlert
+    });
 }
 
 function filterByTemp() {
@@ -27,39 +36,8 @@ function filterByTemp() {
   console.log(temperatureFilter)
 }
 
-/* 
-//More turbines to be shown!!!!!!!!!! 
 function callAPI(){
   $.ajax({
-    //url: 'https://a4girz51oh.execute-api.us-east-1.amazonaws.com/return/1?recordTime=1', //FIXME: get the actual link
-    //url: 'https://1xwt8lhj3l.execute-api.eu-central-1.amazonaws.com/turbinestats/all?id=turbine',
-    url: 'https://1xwt8lhj3l.execute-api.eu-central-1.amazonaws.com/turbinestats/latest?id=turbine',
-    type: 'GET',
-    dataType: 'json',
-    success: function (response) {
-      var len = tur.length;
-      tur = response.record;
-      arr = [];
-      var i = 1;
-      index = 0;
-      for (i = 1; i <= 66; i++) {
-        obj = tur[index];
-        obj.turbineId = i;
-        arr.push(obj)
-        index = (index + 1) % (len-1)
-      }
-      tur = arr;
-    },
-    error: function (request, message, error) {
-      handleException(request, message, error);
-    }
-  });
-}
-*/
-function callAPI(){
-  $.ajax({
-    //url: 'https://a4girz51oh.execute-api.us-east-1.amazonaws.com/return/1?recordTime=1', //FIXME: get the actual link
-    //url: 'https://1xwt8lhj3l.execute-api.eu-central-1.amazonaws.com/turbinestats/all?id=turbine',
     url: 'https://1xwt8lhj3l.execute-api.eu-central-1.amazonaws.com/turbinestats/latest?id=turbine',
     type: 'GET',
     dataType: 'json',
@@ -73,7 +51,6 @@ function callAPI(){
 }
 
 function getJSON() {
-  //console.log("Another call!")
   callAPI();
   updateRealtimeDash(tur);
   updateKPIDash(tur);
@@ -115,9 +92,7 @@ function calcPower(tur) {
   }
 
 function filterByIDs() {
-  //Get the extreme of the filtering range
-  
-  var id = document.getElementById("turbine_num").value; //ex. 2-66
+   var id = document.getElementById("turbine_num").value; //ex. 2-66
    if(id.trim() == ""){
       showCardRange(1, 66);
     }else{  
@@ -148,26 +123,6 @@ function filterByIDs() {
   }
 }  
 
-function filterDaily(input_json) {
-  var today = moment();
-  /*
-  for i = 0 to {
-    var date = new Date(input_json[i].time);
-    var year = s.getFullYear();
-    var month = months[s.getMonth()];
-    var day = s.getDate();
-    if day == today {
-      //take that json part 
-    }
-    else{
-      //discard the json part 
-    }
-
-  }
-  */
-  return output_json //the filtered json with the timestamps related to today
-}
-
 function convertTimestamp(ts){
   var s = new Date(Math.round((ts.replace(/[^0-9]/g, ''))) * 1000);
   var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -178,16 +133,12 @@ function convertTimestamp(ts){
   var min = s.getMinutes();
   var sec = s.getSeconds();
   var time = String(date) + '-' + String(month) + '-'+"2019" + ' ' + hour + ':' + min + ':' + sec ;
-  //console.log(String(date) + " time: " + time);
-  //console.log(" time: " + time);
   return time;
 }
 
 function hideCardRange(fromCard, toCard) {
-  //console.log("Card: " + stats.turbineId + " created!");
   var i;
   for (i = fromCard; i <= toCard; i++) { 
-    //console.log("i " + i);
     if($("#turb_" + i).length != 0){
       var template = $("#turb_" + i);
       template.hide()
@@ -196,7 +147,6 @@ function hideCardRange(fromCard, toCard) {
 }
 
 function showCardRange(fromCard, toCard) {
-  //console.log("Card: " + stats.turbineId + " created!");
   var i;
   for (i = fromCard; i <= toCard; i++) { 
     if($("#turb_" + i).length != 0){
@@ -215,7 +165,6 @@ function modifyTurbineCard(stats){
         template.find(".temp").text("Temperature: " + stats.temp + " F");
         template.find(".windspeed").text("Wind Speed: " + String(parseFloat(stats.windSpeed).toFixed(4)) + " m/s");
         template.find(".power").text("Power: " + computeTurbPower(stats) + " W");
-        //console.log(parseInt(stats.time.substring(0,10)))
         template.find(".time").text("Date: " + new Date(parseInt(stats.time.substring(0, 10)) * 1000));
 
     }
@@ -231,30 +180,22 @@ function modifyTurbineCard(stats){
     } else {
         template.find(".temp").attr("style", "");
     }
-
-
   if (stats.status == "ONLINE"){ 
     //console.log(title);
     card.attr("id", "turb_online");
     border.attr("class", "card shadow h-100 py-2 card_color border-left-primary-online");
     title.attr("class", "text-xs font-weight-bold text-uppercase mb-1 number_id title-color text-primary-online");
     icon.attr("style", "color: #4e73df");
-
-
   }
   else {
     card.attr("id", "turb_offline");
     border.attr("class", "card shadow h-100 py-2 card_color border-left-primary-offline");
     title.attr("class", "title-color text-xs font-weight-bold text-uppercase mb-1 number_id text-primary-offline");
     icon.attr("style", "color: red");
-
-
   }
-
 }
 
 function createTurbineCard(stats) {
-  //console.log("Card: " + stats.turbineId + " created!");
   var template = $("#turbines_box_template").clone();
   template.attr("id", "turb_" + stats.turbineId);
   template.attr("style", "");
@@ -320,24 +261,4 @@ function handleException(request, message, error) {
 		msg += "Message" + request.responseJSON.Message + "\n";
 	}
 	console.log(msg);
-}
-
-function sendEmailAlert(){
-    var aws = require('aws-sdk');
-    AWS.config.update({region: 'eu-central-1'})
-    var params = {
-      Message: 'OFF LINE TURBINE',
-      TopicArn: 'arn:aws:sns:eu-central-1:197099301124:turbineDown'
-    };
-
-    var publishTextPromise = new AWS.SNS({apiVersion: '2010-03-31'}).publish(params).promise(); 
-    // Handle promise's fulfilled/rejected states publishTextPromise.then(
-    /*
-      function(data) { 
-        console.log("Message ${params.Message} send sent to the topic ${params.TopicArn}"); 
-        console.log("MessageID is " + data.MessageId);
-    }).catch(
-      function(err) {
-        console.error(err, err.stack);
-    });*/
 }
